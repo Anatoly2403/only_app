@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'Helvetica Neue';
+  font-style: light;
+  font-weight: 200;
+  font-display: swap;
+  src: url('./static/HelveticaNeueCyr-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue';
+  font-style: medium;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./static/HelveticaNeueCyr-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue';
+  font-style: bold;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./static/HelveticaNeueCyr-Bold.ttf') format('truetype');
+}
