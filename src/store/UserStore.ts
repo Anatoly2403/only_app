@@ -4,6 +4,7 @@ import { AuthGuard, UserService } from "../api/services";
 import { Service } from "../shared/classes";
 import { Guards } from "../shared/enums";
 import { CanAuthenticated, IUser, IUserData } from "../shared/interfaces";
+import { makeAutoObservable } from "mobx";
 
 export class UserStore {
   public readonly guards: Record<Guards, CanAuthenticated> = {
@@ -13,7 +14,9 @@ export class UserStore {
   private _isLoading: boolean = false;
   private _errorMessage: string | null = null;
 
-  constructor(public service: Service) {}
+  constructor(public service: Service) {
+    makeAutoObservable(this, {}, { autoBind: true });
+  }
 
   get isLoading(): boolean {
     return this._isLoading;
@@ -31,12 +34,11 @@ export class UserStore {
     try {
       this._isLoading = true;
       this._user = await this.service.login(data);
-      
+      this._isLoading = false;
     } catch (error) {
       if (error instanceof Error) {
         this._errorMessage = error.message;
       }
-    } finally {
       this._isLoading = false;
     }
   }
