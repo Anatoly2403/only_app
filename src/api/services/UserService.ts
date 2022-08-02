@@ -1,16 +1,38 @@
-import { Service } from '../../shared/classes';
+import { Service } from "../../shared/classes";
 import { IUser, IUserData } from "../../shared/interfaces";
+import { sleep } from "../utils";
 
 export class UserService extends Service {
-  constructor(private api: (data: IUserData) => Promise<IUser>) {
-    super();
-  }
+  private userList: IUser[] = [
+    {
+      login: "steve.jobs@example.com",
+      password: "password",
+      token: "8ba57374-a436-45a2-ac11-01a4925ce59a",
+    },
+  ];
 
   public async login(data: IUserData): Promise<IUser> {
-    const user = await this.api(data);
+    await sleep(1000);
+
+    const user = this.userList.find(
+      (user) => user.login === data.login && user.password === data.password
+    );
+
+    if (!user) throw new Error(`Пользователя ${data.login} не существует`);
+
     if (user.token) {
       localStorage.setItem("token", user.token);
     }
+    return user;
+  }
+
+  public async getUserByToken(token: string): Promise<IUser> {
+    await sleep(1000);
+
+    const user = this.userList.find((user) => user.token === token);
+    
+    if (!user) throw new Error(`Пользователя не существует`);
+
     return user;
   }
 

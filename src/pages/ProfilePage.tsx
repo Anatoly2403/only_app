@@ -1,9 +1,6 @@
-import React from 'react'
+import React from "react";
+import { Profile } from "../components/Profile";
 
 export const ProfilePage = () => {
-  return (
-    <div>
-      ProfilePage
-    </div>
-  )
-}
+  return <Profile />;
+};

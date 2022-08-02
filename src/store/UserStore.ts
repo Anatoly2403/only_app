@@ -1,5 +1,4 @@
 import { createContext, useContext } from "react";
-import { fetchUser } from "../api/mock";
 import { AuthGuard, UserService } from "../api/services";
 import { Service } from "../shared/classes";
 import { Guards } from "../shared/enums";
@@ -47,9 +46,22 @@ export class UserStore {
     this._user = null;
     this.service.logout();
   }
+
+  public async getUserByToken(token: string): Promise<void> {
+    try {
+      this._isLoading = true;
+      this._user = await this.service.getUserByToken(token);
+      this._isLoading = false;
+    } catch (error) {
+      if (error instanceof Error) {
+        this._errorMessage = error.message;
+      }
+      this._isLoading = false;
+    }
+  }
 }
 
-const userService = new UserService(fetchUser);
+const userService = new UserService();
 export const userStore = new UserStore(userService);
 
 export const UserStoreContext = createContext<UserStore | null>(null);

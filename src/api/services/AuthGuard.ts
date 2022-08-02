@@ -9,6 +9,6 @@ export class AuthGuard implements CanAuthenticated {
     if (!token) {
       this.service.logout();
     }
-    return token;
+    return !!token;
   }
 }

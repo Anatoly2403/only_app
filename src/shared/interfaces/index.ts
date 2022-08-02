@@ -10,3 +10,7 @@ export interface IUser extends IUserData {
 export interface CanAuthenticated {
   get isAuthenticated(): boolean;
 }
+
+export interface HasToken {
+   checkToken(): Promise<boolean>;
+}

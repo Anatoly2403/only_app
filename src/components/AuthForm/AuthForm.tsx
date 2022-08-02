@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Input } from "./components/Input";
 import { Checkbox } from "./components/Checkbox";
-import { Button } from "./components/Button";
+import { Button } from "../Button";
 import { ErrorWrapper, StyledForm } from "./Styled";
 import { IUserData } from "../../shared/interfaces";
 import { useStore } from "../../store";
@@ -36,7 +36,7 @@ export const AuthForm: FC = observer(() => {
         <Input name='login' label='Логин' />
         <Input name='password' label='Пароль' />
         <Checkbox name='remember' label='Запомнить пароль' />
-        <Button isLoading={isLoading} type='submit'>
+        <Button disabled={isLoading} type='submit' viewType='primary'>
           Войти
         </Button>
         {errorMessage && (
