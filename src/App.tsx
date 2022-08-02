@@ -8,6 +8,7 @@ import { Guards } from "./shared/enums";
 
 function App() {
   const store = useStore();
+
   return (
     <Layout>
       <Routes>

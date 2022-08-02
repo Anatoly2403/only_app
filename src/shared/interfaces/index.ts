@@ -1,6 +1,7 @@
 export interface IUserData {
   password: string;
   login: string;
+  rememberable?: boolean;
 }
 
 export interface IUser extends IUserData {
@@ -12,5 +13,5 @@ export interface CanAuthenticated {
 }
 
 export interface HasToken {
-   checkToken(): Promise<boolean>;
+  checkToken(): Promise<boolean>;
 }

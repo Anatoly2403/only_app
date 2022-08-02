@@ -17,6 +17,11 @@ export class UserStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
+  get token(): string | null {
+    const tokenData = this.service.token;
+    return tokenData ? tokenData.token : null;
+  }
+
   get isLoading(): boolean {
     return this._isLoading;
   }

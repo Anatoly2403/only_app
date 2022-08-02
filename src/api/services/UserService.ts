@@ -21,16 +21,23 @@ export class UserService extends Service {
     if (!user) throw new Error(`Пользователя ${data.login} не существует`);
 
     if (user.token) {
-      localStorage.setItem("token", user.token);
+      const storageData = JSON.stringify({
+        token: user.token,
+        rememberable: data.rememberable,
+      });
+      localStorage.setItem("token", storageData);
     }
-    return user;
+    return {
+      ...user,
+      rememberable: data.rememberable,
+    };
   }
 
   public async getUserByToken(token: string): Promise<IUser> {
     await sleep(1000);
 
     const user = this.userList.find((user) => user.token === token);
-    
+
     if (!user) throw new Error(`Пользователя не существует`);
 
     return user;

@@ -11,9 +11,10 @@ interface Props {
   name: string;
   placeholder?: string;
   label: string;
+  type?: string;
 }
 
-export const Input: FC<Props> = ({ name, placeholder = "", label }) => {
+export const Input: FC<Props> = ({ name, placeholder = "", label, type }) => {
   const {
     control,
     formState: { errors },
@@ -26,6 +27,7 @@ export const Input: FC<Props> = ({ name, placeholder = "", label }) => {
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledInput
         id={name}
+        type={type}
         error={!!errors[name]}
         placeholder={placeholder}
         {...control.register(name)}

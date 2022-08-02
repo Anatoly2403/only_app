@@ -10,11 +10,12 @@ import { IUserData } from "../../shared/interfaces";
 import { useStore } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { ErrorMessage } from '../ErrorMessage';
+import { ErrorMessage } from "../ErrorMessage";
 
 const validationSchema = yup.object().shape({
   login: yup.string().trim().required("Обязательное поле"),
   password: yup.string().trim().required("Обязательное поле"),
+  rememberable: yup.boolean().notRequired(),
 });
 
 export const AuthForm: FC = observer(() => {
@@ -34,8 +35,8 @@ export const AuthForm: FC = observer(() => {
     <FormProvider {...formApi}>
       <StyledForm onSubmit={formApi.handleSubmit(onSubmit)}>
         <Input name='login' label='Логин' />
-        <Input name='password' label='Пароль' />
-        <Checkbox name='remember' label='Запомнить пароль' />
+        <Input name='password' label='Пароль' type='password' />
+        <Checkbox name='rememberable' label='Запомнить пароль' />
         <Button disabled={isLoading} type='submit' viewType='primary'>
           Войти
         </Button>
