@@ -5,11 +5,12 @@ import * as yup from "yup";
 import { Input } from "./components/Input";
 import { Checkbox } from "./components/Checkbox";
 import { Button } from "./components/Button";
-import { StyledForm } from "./Styled";
+import { ErrorWrapper, StyledForm } from "./Styled";
 import { IUserData } from "../../shared/interfaces";
 import { useStore } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import { ErrorMessage } from '../ErrorMessage';
 
 const validationSchema = yup.object().shape({
   login: yup.string().trim().required("Обязательное поле"),
@@ -17,7 +18,7 @@ const validationSchema = yup.object().shape({
 });
 
 export const AuthForm: FC = observer(() => {
-  const { login, isLoading } = useStore();
+  const { login, isLoading, errorMessage } = useStore();
   const navigate = useNavigate();
 
   const formApi = useForm<IUserData>({
@@ -25,7 +26,6 @@ export const AuthForm: FC = observer(() => {
   });
 
   const onSubmit = async (data: IUserData) => {
-    console.log(data);
     await login(data);
     navigate("profile", { replace: true });
   };
@@ -39,6 +39,11 @@ export const AuthForm: FC = observer(() => {
         <Button isLoading={isLoading} type='submit'>
           Войти
         </Button>
+        {errorMessage && (
+          <ErrorWrapper>
+            <ErrorMessage message={errorMessage} />
+          </ErrorWrapper>
+        )}
       </StyledForm>
     </FormProvider>
   );
