@@ -17,9 +17,12 @@ export class UserStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
+  get isRememberable(): boolean {
+    return !!this.service.token?.rememberable;
+  }
+
   get token(): string | null {
-    const tokenData = this.service.token;
-    return tokenData ? tokenData.token : null;
+    return this.service.token?.token || null;
   }
 
   get isLoading(): boolean {
