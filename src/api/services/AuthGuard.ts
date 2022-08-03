@@ -5,10 +5,7 @@ export class AuthGuard implements CanAuthenticated {
   constructor(private service: Service) {}
 
   get isAuthenticated(): boolean {
-    const token = this.service.token?.token;
-    if (!token) {
-      this.service.logout();
-    }
+    const token = this.service.token;
     return !!token;
   }
 }

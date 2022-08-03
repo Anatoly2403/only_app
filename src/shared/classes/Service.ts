@@ -1,25 +1,14 @@
 import { IUser, IUserData } from "../interfaces";
-import { IStorageData } from "../types";
-
-function isStorageData(token: unknown): token is IStorageData {
-  if (!token) return false;
-  return (
-    typeof token === "object" && "token" in token && "rememberable" in token
-  );
-}
-
 export abstract class Service {
-  get token(): IStorageData | null {
-    const token = localStorage.getItem("token");
-    const parsedToken = token && JSON.parse(token);
-    if (isStorageData(parsedToken)) return parsedToken;
-
-    return null;
+  get token(): string | null {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    return token;
   }
 
-  abstract login(data: IUserData): Promise<IUser>;
-
-  abstract logout(): void;
+  abstract getUserByData(data: IUserData): Promise<IUser>;
 
   abstract getUserByToken(token: string): Promise<IUser>;
+
+  abstract removeToken(): void;
 }

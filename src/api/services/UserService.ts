@@ -11,7 +11,7 @@ export class UserService extends Service {
     },
   ];
 
-  public async login(data: IUserData): Promise<IUser> {
+  public async getUserByData(data: IUserData): Promise<IUser> {
     await sleep(1000);
 
     const user = this.userList.find(
@@ -21,11 +21,10 @@ export class UserService extends Service {
     if (!user) throw new Error(`Пользователя ${data.login} не существует`);
 
     if (user.token) {
-      const storageData = JSON.stringify({
-        token: user.token,
-        rememberable: data.rememberable,
-      });
-      localStorage.setItem("token", storageData);
+      sessionStorage.setItem("token", user.token);
+      if (data.rememberable) {
+        localStorage.setItem("token", user.token);
+      }
     }
     return {
       ...user,
@@ -43,7 +42,8 @@ export class UserService extends Service {
     return user;
   }
 
-  public logout(): void {
+  public removeToken(): void {
     localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
   }
 }

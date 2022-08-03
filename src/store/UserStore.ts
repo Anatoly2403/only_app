@@ -17,14 +17,6 @@ export class UserStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  get isRememberable(): boolean {
-    return !!this.service.token?.rememberable;
-  }
-
-  get token(): string | null {
-    return this.service.token?.token || null;
-  }
-
   get isLoading(): boolean {
     return this._isLoading;
   }
@@ -40,7 +32,7 @@ export class UserStore {
   public async login(data: IUserData): Promise<void> {
     try {
       this._isLoading = true;
-      this._user = await this.service.login(data);
+      this._user = await this.service.getUserByData(data);
       this._isLoading = false;
     } catch (error) {
       if (error instanceof Error) {
@@ -52,7 +44,7 @@ export class UserStore {
 
   public logout(): void {
     this._user = null;
-    this.service.logout();
+    this.service.removeToken();
   }
 
   public async getUserByToken(token: string): Promise<void> {

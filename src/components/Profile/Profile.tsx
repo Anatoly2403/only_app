@@ -6,11 +6,11 @@ import { Button } from "../Button";
 import { BtnWrapper, StyledProfile, StyledText } from "./Styled";
 
 export const Profile = observer(() => {
-  const { user, logout, token, getUserByToken } = useStore();
+  const { user, logout, service, getUserByToken } = useStore();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user && token) getUserByToken(token);
+    if (!user && service.token) getUserByToken(service.token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
